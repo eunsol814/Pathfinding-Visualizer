@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pathfinding Visualizer</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript" src="util.js"></script>
+	<script type="text/javascript" src="board.js"></script>
+	<script type="text/javascript" src="search.js"></script>
+	<script type="text/javascript" src="animation.js"></script>	
+	<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body>
+	<h1>Pathfinding Visualizer</h1>
+	<div class="menubar">
+		<div class="dropdown">
+			<button class="dropbutton">Search Algorithm
+				<i class="down"></i>
+			</button>
+			<div class="dropdown-content" id="algorithm">
+				<a href="#" id="BFS">Breadth First Search</a>
+				<a href="#" id="DFS">Depth First Search</a>
+				<a href="#" id="A*">A* Search</a>
+				<a href="#" id="Greedy">Greedy Search</a>
+			</div>
+		</div>
+		<div class="dropdown">
+			<button class="dropbutton">Heuristic
+				<i class="down"></i>
+			</button>
+			<div class="dropdown-content" id="heuristic">
+				<a href="#" id="null">Null Heuristic</a>
+				<a href="#" id="manhattanD">Manhattan Distance</a>
+				<a href="#" id="mazeD">Maze Distance</a>
+			</div>
+		</div>
+		<div class="dropdown">
+			<button class="dropbutton">Maze Generation Algorithm
+				<i class="down"></i>
+			</button>
+			<div class="dropdown-content" id="mazeAlgorithm">
+				<a href="#" id="division" >Recursive Division Method</a>
+				<a href="#" id="backtrack">Recursive Backtracker</a>
+				<a href="#" id="kruskal">Kruskal's Algorithm</a>
+				<a href="#" id='prim'>Prim's Algorithm</a>
+			</div>
+		</div>
+		<a href="#clearboard" id="clearboard">Clear Board</a>
+		<a href="#clearwall" id="clearwall">Clear Walls</a>
+		<a href="#clearpath" id="clearpath">Clear Path</a>
+		<a href="#visualize" id="visualize">Visualize!</a>
+		<a href="#help">Help</a>
+	</div>
+	<br>
+	<div>
+		<table id="maze"></table>
+		<br>
+	</div>
+	
+</body>
+</html>
+
+
+

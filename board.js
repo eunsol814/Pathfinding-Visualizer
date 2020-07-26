@@ -1,0 +1,168 @@
+class Board {
+	constructor() {
+		this.maze = document.getElementById("maze");
+		//this.width = 500;
+		//this.height = 300;
+		this.rows = 25;
+		this.cols = 40;
+		this.data = null;
+		this.directions = ["Up", "Down", "Right", "Left"];
+		this.startState = {r: 3, c: 3};
+		this.goalState = {r: 17, c: 35};
+		this.algorithm = "BFS";
+		this.heuristic = null;
+		this.search = null;
+		this.explored = null;
+		this.shortestPath = null;
+	}
+
+	createGrid() {
+		// Creates initial maze board without anything on it
+		// Top-Left coner = (0, 0)
+		let board = document.getElementById("maze");
+		let table = ""
+		for (var row=0; row<this.rows; row++) {
+			let sub = [];
+			let boardRow = "<tr id='row ${row}'>";
+			for (var col=0; col<this.cols; col++) {
+				sub.push(false);
+				var index = {r: row, c: col};
+				if ((this.startState.r == row) && (this.startState.c == col)) {
+					boardRow += "<td id=" + JSON.stringify(index) + " class='player' onclick=moveCell()></td>";
+				} else if ((this.goalState.r == row) && (this.goalState.c == col)) {
+					boardRow += "<td id=" + JSON.stringify(index) + " class='goal' onclick=moveCell()></td>";
+				} else {
+					boardRow += "<td id=" + JSON.stringify(index) + " class='blank' onclick=selectCell(this)></td>";
+				}
+			}
+			boardRow += "</tr>";
+			table += boardRow;
+		}
+		board.innerHTML = table;
+		this.data = board;
+	};
+
+	clearAll() {
+		// Remove everything on board
+		for (var row=0; row<this.rows; row++) {
+			for (var col=0; col<this.cols; col++) {
+				let index = {r: row, c: col};
+				let cell = document.getElementById(JSON.stringify(index));
+				if ((cell.className != "player") && (cell.className != "goal") && (cell.className != "blank")) {
+					cell.className = "blank";
+				}
+			}
+		}
+	};
+
+	clearWalls() {
+		// Remove all the walls on board
+		Array.from(document.getElementsByClassName("wall")).forEach(
+			function(element) {
+				element.className = "blank";
+			})
+	};
+
+	clearPaths() {
+		// Remove paths on board
+		Array.from(document.getElementsByClassName("explored")).forEach(
+			function(element) {
+				element.className = "blank";
+			})
+		Array.from(document.getElementsByClassName("path")).forEach(
+			function(element) {
+				element.className = "blank";
+			})
+	};
+
+	checkExplored(state) {
+		if (state != this.startState) {
+			let explored = document.getElementById(JSON.stringify(state));
+			explored.className = 'explored';
+		}
+	};
+
+	isWall(state) {
+		if (this.data == null) {
+			return false;
+		}else {
+			return document.getElementById(JSON.stringify(state)).className == 'wall';
+		}
+	};
+
+	getStartState() {
+		// Return starting position
+		return this.startState;
+	};
+
+	goalTest(state) {
+		// Check if state is the goal state
+		return (state.r == this.goalState.r) && (state.c == this.goalState.c);
+	};
+
+	getActions(state) {
+		// Get list of actions that could be taken in current state
+		let actions = [];
+		const currRow = state.r;
+		const currCol = state.c;
+		if ((currRow > 0) && (!this.isWall({r: currRow-1, c: currCol}))) {
+			actions.push("Up");
+		}
+		if ((currCol + 1 < this.cols) && (!this.isWall({r: currRow, c: currCol+1}))) {
+			actions.push("Right");
+		}
+		if ((currRow + 1 < this.rows) && (!this.isWall({r: currRow+1, c: currCol}))) {
+			actions.push("Down");
+		}
+		if ((currCol > 0) && (!this.isWall({r: currRow, c: currCol-1}))) {
+			actions.push("Left");
+		}
+		return actions;
+	};
+
+	getResult(state, action) {
+		// Get the result of taking 'action' at 'state'
+		const currRow = state.r;
+		const currCol = state.c;
+		if (action == "Up") {
+			return {r: currRow-1, c: currCol};
+		} else if (action == "Down") {
+			return {r: currRow+1, c: currCol};
+		} else if (action == "Left") {
+			return {r: currRow, c: currCol-1};
+		} else if (action == "Right") {
+			return {r: currRow, c: currCol+1};
+		}
+	};
+
+	getCost(state, action) {
+		// Get the cost of taking 'action' at 'state'
+		return null;
+	};
+
+};
+
+
+
+function moveCell() {
+	// Move player/goal cell to different position
+};
+
+function selectCell(cell) {
+	// Turn selected cell to wall if id='blank'
+	// Else remove wall from cell (id='wall')
+	if (cell.className == 'blank') {
+		cell.className = 'wall';
+	} else if (cell.className == 'wall'){
+		cell.className = 'blank';
+	}
+};
+
+
+
+
+
+
+
+
+

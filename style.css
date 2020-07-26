@@ -1,0 +1,112 @@
+h1 {
+	float: left;
+	background: black;
+	color: white;
+	font: bold 30px Arial, sans-serif;
+	padding: 12px;
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: center;
+	margin: 0;
+}
+
+.menubar {
+	float: left;
+	overflow: hidden;
+	background: black;
+	font: 16px Arial, sans-serif;
+}
+
+.menubar a {
+	border: none;
+	outline: none;
+	float: left;
+	color: white;
+	text-align: center;
+	padding: 20px 20px;
+	text-decoration: none;
+}
+
+.dropdown {
+	float: left;
+	overflow: hidden;
+}
+
+.dropdown .dropbutton {
+	border: none;
+	color: white;
+	background: inherit;
+	padding: 20px 15px;
+	outline: none;
+	margin: 0;
+	font: inherit;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background: darkgrey;
+	z-index: 9999;
+}
+
+.dropdown-content a {
+	font: 15px Arial, sans-serif;
+	text-align: left;
+	float: none;
+	color: black;
+	display: block;
+	text-decoration: none;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.dropdown-content a:hover {
+	background: lightgrey;
+}
+
+#maze {
+	outline: 2px solid black;
+	margin: auto;
+	margin-top: 150px;
+	position: relative;
+	min-width: 1100px;
+	min-height: 700px;
+	max-width: 1200px;
+	max-height: 750px;
+	width: 90%;
+	border-collapse: collapse;
+}
+
+tr, td {
+	border: 1px solid grey;
+	padding: 0px;
+	margin: 0px;
+}
+
+.player {
+	background: darkblue;
+}
+
+.goal {
+	background: green;
+}
+
+.wall {
+	background: #333333;
+}
+
+@keyframes explore {
+	from {background: palevioletred;} to {background: lavenderblush;}
+}
+
+.explored {
+	background: lavenderblush;
+	animation-name: explore;
+	animation-duration: 1.5s;
+}
+
+.path {
+	background: yellow;
+}
