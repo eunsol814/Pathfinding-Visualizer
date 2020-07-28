@@ -114,12 +114,12 @@ function aStarSearch(problem, heuristic=nullHeuristic) {
 				answer = path;
 			}else if (!explored.includes(state)) {
 				explored.push(state);
-				problem.checkExplored(state);
+				//problem.checkExplored(state);
 				var actions = problem.getActions(state);
-				for (action of actions) {
-					var child = problem.getResult(state, action);
-					cost = problem.getCost(state, action) + node.pathCost;
-					var newNode = new Node(child, node, action, cost);
+				for (act of actions) {
+					var child = problem.getResult(state, act);
+					cost = problem.getCost(state, act) + node.pathCost;
+					var newNode = new Node(child, node, act, cost);
 					var newPriority = cost + heuristic(child, problem);
 					frontier.update(newNode, newPriority);
 				}

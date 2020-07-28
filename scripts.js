@@ -2,17 +2,16 @@ $(document).ready(function() {
 	var maze = new Board();
 	maze.createGrid();
 	//console.log([maze.getStartState()]);
-	/*
-	document.getElementById("BFS").click(function() {
-		breadthFirstSearch(maze);
-	});
-	document.getElementById("DFS").click(function() {
-		depthFirstSearch(maze)
-	});
-	document.getElementById("A*").click(function() {
-		aStarSearch(maze)
-	});
-	*/
+	
+	document.getElementById("BFS").onclick = function() {
+		maze.algorithm = "BFS";
+	};
+	document.getElementById("DFS").onclick = function() {
+		maze.algorithm = "DFS";
+	};
+	document.getElementById("A*").onclick = function() {
+		maze.algorithm = "A*";
+	};
 
 	document.getElementById("visualize").onclick = function() {
 		if (maze.algorithm == "BFS") {

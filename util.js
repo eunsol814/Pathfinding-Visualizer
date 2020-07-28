@@ -65,20 +65,24 @@ class PriorityQueue {
 		// When item is not in priority queue
 		for (var i=0; i<this.items.length; i++) {
 			if (this.items[i].priority > priority) {
-
+				//INSERT
 			}
 		}
 		return null;
 	}
 	pop() {
-		return null;
+		return this.items.pop.element;
 	}
 	isEmpty() {
 		return this.count == 0;
 	}
 	update(element, priority) {
 		// When item is already in priority queue
-		return null;
+		for (var i=0; i<this.items.length; i++) {
+			if (this.items[i].element == element) {
+				//DO SOMETHING
+			}
+		}
 	}
 }
 

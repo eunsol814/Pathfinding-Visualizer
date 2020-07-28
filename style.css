@@ -71,26 +71,29 @@ h1 {
 	margin: auto;
 	margin-top: 150px;
 	position: relative;
-	min-width: 1100px;
+	width: 100%;
 	min-height: 700px;
-	max-width: 1200px;
-	max-height: 750px;
-	width: 90%;
+	max-height: 800px;
 	border-collapse: collapse;
 }
 
 tr, td {
+	width: auto;
 	border: 1px solid grey;
 	padding: 0px;
 	margin: 0px;
 }
 
 .player {
-	background: darkblue;
+	background-image: url(smile.svg);
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .goal {
-	background: green;
+	background-image: url(flag.svg);
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .wall {
@@ -98,15 +101,15 @@ tr, td {
 }
 
 @keyframes explore {
-	from {background: palevioletred;} to {background: lavenderblush;}
+	from {background-color: palevioletred;} to {background-color: lavenderblush;}
 }
 
 .explored {
-	background: lavenderblush;
+	background-color: lavenderblush;
 	animation-name: explore;
 	animation-duration: 1.5s;
 }
 
 .path {
-	background: yellow;
+	background-color: yellow;
 }

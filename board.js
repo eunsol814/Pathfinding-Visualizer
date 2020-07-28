@@ -14,6 +14,7 @@ class Board {
 		this.search = null;
 		this.explored = null;
 		this.shortestPath = null;
+		this.playerImg = "<img src='smile.svg'>";
 	}
 
 	createGrid() {
@@ -28,11 +29,11 @@ class Board {
 				sub.push(false);
 				var index = {r: row, c: col};
 				if ((this.startState.r == row) && (this.startState.c == col)) {
-					boardRow += "<td id=" + JSON.stringify(index) + " class='player' onclick=moveCell()></td>";
+					boardRow += "<td id=" + JSON.stringify(index) + " class='player' dragabble='true' ondrop='drop(event)' ondragover='allowDrop(event)' ondragstart='drag(event)' onclick=moveCell()></td>";
 				} else if ((this.goalState.r == row) && (this.goalState.c == col)) {
-					boardRow += "<td id=" + JSON.stringify(index) + " class='goal' onclick=moveCell()></td>";
+					boardRow += "<td id=" + JSON.stringify(index) + " class='goal' dragabble='true' ondrop='drop(event)' ondragover='allowDrop(event)' ondragstart='drag(event)' onclick=moveCell()></td>";
 				} else {
-					boardRow += "<td id=" + JSON.stringify(index) + " class='blank' onclick=selectCell(this)></td>";
+					boardRow += "<td id=" + JSON.stringify(index) + " class='blank' ondrop='drop(event)' ondragover='allowDrop(event)' ondragstart='drag(event)' onclick=selectCell(this)></td>";
 				}
 			}
 			boardRow += "</tr>";
@@ -92,11 +93,17 @@ class Board {
 
 	getStartState() {
 		// Return starting position
+		Array.from(document.getElementsByClassName("player")).forEach((element) => {
+			this.startState = JSON.parse(element.id);
+		})
 		return this.startState;
 	};
 
 	goalTest(state) {
 		// Check if state is the goal state
+		Array.from(document.getElementsByClassName("goal")).forEach((element) => {
+			this.goalState = JSON.parse(element.id);
+		})
 		return (state.r == this.goalState.r) && (state.c == this.goalState.c);
 	};
 
@@ -137,15 +144,9 @@ class Board {
 
 	getCost(state, action) {
 		// Get the cost of taking 'action' at 'state'
-		return null;
+		return 0;
 	};
 
-};
-
-
-
-function moveCell() {
-	// Move player/goal cell to different position
 };
 
 function selectCell(cell) {
