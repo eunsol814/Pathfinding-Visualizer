@@ -63,25 +63,45 @@ class PriorityQueue {
 	}
 	push(element, priority) {
 		// When item is not in priority queue
+		var item = new pqElement(element, priority);
+		var pushed = false;
 		for (var i=0; i<this.items.length; i++) {
 			if (this.items[i].priority > priority) {
-				//INSERT
+				pushed = true;
+				this.items.splice(i, 0, item);
 			}
 		}
+		if (!pushed) {
+			this.items.push(item);
+		}
+		this.count += 1;
 		return null;
 	}
 	pop() {
-		return this.items.pop.element;
+		var e = this.items.shift();
+		this.count -= 1;
+		return e.element;
 	}
 	isEmpty() {
 		return this.count == 0;
 	}
 	update(element, priority) {
 		// When item is already in priority queue
+		var item = new pqElement(element, priority);
+		var found = false;
 		for (var i=0; i<this.items.length; i++) {
 			if (this.items[i].element == element) {
-				//DO SOMETHING
+				if (this.items[i].priority > priority) {
+					//TAKE IT OUT & CHANGE
+					this.items.splice(i, 1);
+					this.items -= 1;
+					this.push(element, priority);
+				}
+				found = true;
 			}
+		}
+		if (!found) {
+			this.push(element, priority);
 		}
 	}
 }

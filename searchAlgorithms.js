@@ -104,29 +104,36 @@ function aStarSearch(problem, heuristic=nullHeuristic) {
 		}else {
 			var node = frontier.pop();
 			var state = node.state;
+			//console.log(explored);
+			//console.log(state);
 			if (problem.goalTest(state)) {
-				var curr = node;
 				var path = [];
-				while (curr.action != null) {
-					path.unshift(curr.action);
-					curr = curr.parent;
+				while (node.action != null) {
+					path.unshift(node.action);
+					node = node.parent;
 				}
 				answer = path;
-			}else if (!explored.includes(state)) {
+			}else if (!(explored.some(cell => (cell.r == state.r) && (cell.c == state.c)))) {
 				explored.push(state);
+				//console.log(explored);
 				//problem.checkExplored(state);
 				var actions = problem.getActions(state);
 				for (act of actions) {
 					var child = problem.getResult(state, act);
-					cost = problem.getCost(state, act) + node.pathCost;
-					var newNode = new Node(child, node, act, cost);
-					var newPriority = cost + heuristic(child, problem);
-					frontier.update(newNode, newPriority);
+					if (!(explored.some(cell => (cell.r == child.r) && (cell.c == child.c)))) {
+						var cost = problem.getCost(state, act) + node.pathCost;
+						var newNode = new Node(child, node, act, cost);
+						var newPriority = cost + heuristic(child, problem);
+						frontier.update(newNode, newPriority);
+					}
 				}
 			}
 		}
 	}
-	return explored, answer;
+	problem.explored = explored;
+	problem.shortestPath = answer;
+	console.log(answer);
+	callSearchAnimation(problem);
 };
 
 

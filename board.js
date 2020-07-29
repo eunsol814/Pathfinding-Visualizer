@@ -7,8 +7,8 @@ class Board {
 		this.cols = 40;
 		this.data = null;
 		this.directions = ["Up", "Down", "Right", "Left"];
-		this.startState = {r: 3, c: 3};
-		this.goalState = {r: 17, c: 35};
+		this.startState = {r: 10, c: 10};
+		this.goalState = {r: 10, c: 30};
 		this.algorithm = "BFS";
 		this.heuristic = null;
 		this.search = null;
