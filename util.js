@@ -69,13 +69,13 @@ class PriorityQueue {
 			if (this.items[i].priority > priority) {
 				pushed = true;
 				this.items.splice(i, 0, item);
+				break;
 			}
 		}
 		if (!pushed) {
 			this.items.push(item);
 		}
 		this.count += 1;
-		return null;
 	}
 	pop() {
 		var e = this.items.shift();
@@ -87,14 +87,13 @@ class PriorityQueue {
 	}
 	update(element, priority) {
 		// When item is already in priority queue
-		var item = new pqElement(element, priority);
 		var found = false;
 		for (var i=0; i<this.items.length; i++) {
-			if (this.items[i].element == element) {
+			if ((this.items[i].element.state.r == element.state.r) && (this.items[i].element.state.c == element.state.c)) {
 				if (this.items[i].priority > priority) {
 					//TAKE IT OUT & CHANGE
 					this.items.splice(i, 1);
-					this.items -= 1;
+					this.count -= 1;
 					this.push(element, priority);
 				}
 				found = true;

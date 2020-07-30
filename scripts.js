@@ -13,13 +13,23 @@ $(document).ready(function() {
 		maze.algorithm = "A*";
 	};
 
+	document.getElementById("null").onclick = function() {
+		maze.heuristic = function(a, b) {return nullHeuristic(a, b)};
+	};
+	document.getElementById("manhattanD").onclick = function() {
+		maze.heuristic = function(a, b) {return manhattanDistance(a, b)};
+	};
+	document.getElementById("euclideanD").onclick = function() {
+		maze.heuristic = function(a, b) {return euclideanDistance(a, b)};
+	};
+
 	document.getElementById("visualize").onclick = function() {
 		if (maze.algorithm == "BFS") {
 			breadthFirstSearch(maze);
 		} else if (maze.algorithm == "DFS") {
 			depthFirstSearch(maze);
 		} else if (maze.algorithm == "A*") {
-			aStarSearch(maze);
+			aStarSearch(maze, maze.heuristic);
 		}
 	};
 

@@ -1,9 +1,5 @@
 //import {Stack, Queue, PriorityQueue, Node} from 'util';
 
-function nullHeuristic(state, problem=null) {
-	return 0;
-}
-
 function depthFirstSearch(problem) {
 	var answer = null;
 	var explored = [];
@@ -27,7 +23,6 @@ function depthFirstSearch(problem) {
 			}else {
 				var actions = problem.getActions(state);
 				explored.push(state);
-				//problem.checkExplored(state);
 				future = future.filter(function(states) {
 					return states != state
 				})
@@ -71,7 +66,6 @@ function breadthFirstSearch(problem) {
 			}else {
 				var actions = problem.getActions(state);
 				explored.push(state);
-				//problem.checkExplored(state);
 				future = future.filter(function(states) {
 					return states != state
 				})
@@ -92,7 +86,7 @@ function breadthFirstSearch(problem) {
 	callSearchAnimation(problem);
 };
 
-function aStarSearch(problem, heuristic=nullHeuristic) {
+function aStarSearch(problem, heuristic) {
 	var answer = null;
 	var explored = [];
 	var frontier = new PriorityQueue();
@@ -104,8 +98,6 @@ function aStarSearch(problem, heuristic=nullHeuristic) {
 		}else {
 			var node = frontier.pop();
 			var state = node.state;
-			//console.log(explored);
-			//console.log(state);
 			if (problem.goalTest(state)) {
 				var path = [];
 				while (node.action != null) {
@@ -115,24 +107,19 @@ function aStarSearch(problem, heuristic=nullHeuristic) {
 				answer = path;
 			}else if (!(explored.some(cell => (cell.r == state.r) && (cell.c == state.c)))) {
 				explored.push(state);
-				//console.log(explored);
-				//problem.checkExplored(state);
 				var actions = problem.getActions(state);
 				for (act of actions) {
 					var child = problem.getResult(state, act);
-					if (!(explored.some(cell => (cell.r == child.r) && (cell.c == child.c)))) {
-						var cost = problem.getCost(state, act) + node.pathCost;
-						var newNode = new Node(child, node, act, cost);
-						var newPriority = cost + heuristic(child, problem);
-						frontier.update(newNode, newPriority);
-					}
+					var cost = problem.getCost(state, act) + node.pathCost;
+					var newNode = new Node(child, node, act, cost);
+					var newPriority = cost + heuristic(child, problem);
+					frontier.update(newNode, newPriority);
 				}
 			}
 		}
 	}
 	problem.explored = explored;
 	problem.shortestPath = answer;
-	console.log(answer);
 	callSearchAnimation(problem);
 };
 

@@ -4,7 +4,9 @@
 	<title>Pathfinding Visualizer</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<script src=https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.3.0/math.min.js></script>
 	<script type="text/javascript" src="util.js"></script>
+	<script type="text/javascript" src="heuristics.js"></script>
 	<script type="text/javascript" src="board.js"></script>
 	<script type="text/javascript" src="searchAlgorithms.js"></script>
 	<script type="text/javascript" src="animation.js"></script>	
@@ -31,7 +33,7 @@
 			<div class="dropdown-content" id="heuristic">
 				<a href="#" id="null">Null Heuristic</a>
 				<a href="#" id="manhattanD">Manhattan Distance</a>
-				<a href="#" id="mazeD">Maze Distance</a>
+				<a href="#" id="euclideanD">Euclidean Distance</a>
 			</div>
 		</div>
 		<div class="dropdown">
