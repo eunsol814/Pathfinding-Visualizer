@@ -89,7 +89,7 @@ class PriorityQueue {
 		// When item is already in priority queue
 		var found = false;
 		for (var i=0; i<this.items.length; i++) {
-			if ((this.items[i].element.state.r == element.state.r) && (this.items[i].element.state.c == element.state.c)) {
+			if (_.isEqual(this.items[i].element.state, element.state)) {
 				if (this.items[i].priority > priority) {
 					//TAKE IT OUT & CHANGE
 					this.items.splice(i, 1);

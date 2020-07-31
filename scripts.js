@@ -12,6 +12,9 @@ $(document).ready(function() {
 	document.getElementById("A*").onclick = function() {
 		maze.algorithm = "A*";
 	};
+	document.getElementById("Dijkstra").onclick = function() {
+		maze.algorithm = "Dijkstra";
+	};
 
 	document.getElementById("null").onclick = function() {
 		maze.heuristic = function(a, b) {return nullHeuristic(a, b)};
@@ -30,6 +33,8 @@ $(document).ready(function() {
 			depthFirstSearch(maze);
 		} else if (maze.algorithm == "A*") {
 			aStarSearch(maze, maze.heuristic);
+		} else if (maze.algorithm == "Dijkstra") {
+			dijkstra(maze);
 		}
 	};
 

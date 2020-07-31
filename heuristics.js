@@ -5,7 +5,6 @@ function nullHeuristic(state, problem=null) {
 function manhattanDistance(state, problem) {
 	var goal = problem.goalState;
 	var result = Math.abs(goal.r - state.r) + Math.abs(goal.c - state.c);
-	console.log(state, result);
 	return result;
 }
 

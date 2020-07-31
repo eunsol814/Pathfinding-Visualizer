@@ -28,9 +28,9 @@ class Board {
 			for (var col=0; col<this.cols; col++) {
 				sub.push(false);
 				var index = {r: row, c: col};
-				if ((this.startState.r == row) && (this.startState.c == col)) {
+				if (_.isEqual(this.startState, index)) {
 					boardRow += "<td id=" + JSON.stringify(index) + " class='player' dragabble='true' ondrop='drop(event)' ondragover='allowDrop(event)' ondragstart='drag(event)' onclick=moveCell()></td>";
-				} else if ((this.goalState.r == row) && (this.goalState.c == col)) {
+				} else if (_.isEqual(this.goalState, index)) {
 					boardRow += "<td id=" + JSON.stringify(index) + " class='goal' dragabble='true' ondrop='drop(event)' ondragover='allowDrop(event)' ondragstart='drag(event)' onclick=moveCell()></td>";
 				} else {
 					boardRow += "<td id=" + JSON.stringify(index) + " class='blank' ondrop='drop(event)' ondragover='allowDrop(event)' ondragstart='drag(event)' onclick=selectCell(this)></td>";
@@ -104,7 +104,7 @@ class Board {
 		Array.from(document.getElementsByClassName("goal")).forEach((element) => {
 			this.goalState = JSON.parse(element.id);
 		})
-		return (state.r == this.goalState.r) && (state.c == this.goalState.c);
+		return (_.isEqual(this.goalState, state));
 	};
 
 	getActions(state) {

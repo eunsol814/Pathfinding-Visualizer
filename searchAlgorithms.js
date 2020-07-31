@@ -28,8 +28,8 @@ function depthFirstSearch(problem) {
 				})
 				for (act of actions) {
 					var child = problem.getResult(state, act);
-					if (!(explored.some(cell => (cell.r == child.r) && (cell.c == child.c))) && 
-						!(future.some(cell => (cell.r == child.r) && (cell.c == child.c)))) {
+					if (!(explored.some(cell => (_.isEqual(cell, child)))) && 
+						!(future.some(cell => (_.isEqual(cell, child))))) {
 						var newNode = new Node(child, node, act, 0);
 						future.push(newNode);
 						frontier.push(newNode);
@@ -71,8 +71,8 @@ function breadthFirstSearch(problem) {
 				})
 				for (act of actions) {
 					var child = problem.getResult(state, act);
-					if (!(explored.some(cell => (cell.r == child.r) && (cell.c == child.c))) && 
-						!(future.some(cell => (cell.r == child.r) && (cell.c == child.c)))) {
+					if (!(explored.some(cell => (_.isEqual(cell, child)))) && 
+						!(future.some(cell => (_.isEqual(cell, child))))) {
 						var newNode = new Node(child, node, act, 0);
 						future.push(child);
 						frontier.push(newNode);
@@ -105,7 +105,7 @@ function aStarSearch(problem, heuristic) {
 					node = node.parent;
 				}
 				answer = path;
-			}else if (!(explored.some(cell => (cell.r == state.r) && (cell.c == state.c)))) {
+			}else if (!(explored.some(cell => (_.isEqual(cell, state))))) {
 				explored.push(state);
 				var actions = problem.getActions(state);
 				for (act of actions) {
@@ -123,7 +123,51 @@ function aStarSearch(problem, heuristic) {
 	callSearchAnimation(problem);
 };
 
-
+function dijkstra(problem) {
+	var answer = null;
+	var explored = [];
+	var frontier = new PriorityQueue();
+	var start = problem.getStartState()
+	for (var i=0; i<problem.rows; i++) {
+		for (var j=0; j<problem.cols; j++) {
+			var index = {r: i, c: j};
+			if (!(_.isEqual(index, start))) {
+				frontier.push(new Node(index, null, null, Infinity), Infinity);
+			} else {
+				console.log(index, start);
+				frontier.push(new Node(start, null, null, 0), 0);
+			}
+		}
+	}
+	while (!frontier.isEmpty()) {
+		var node = frontier.pop();
+		var state = node.state;
+		if (problem.goalTest(state)) {
+			var path = [];
+			while (node.action != null) {
+				path.unshift(node.action);
+				node = node.parent;
+			}
+			answer = path;
+			break;
+		}
+		else {
+			if (!explored.some(cell => (_.isEqual(cell, state)))){
+				explored.push(state);
+			}
+			var actions = problem.getActions(state);
+			for (act of actions) {
+				var child = problem.getResult(state, act);
+				var newDistance = problem.getCost(state, act) + node.pathCost + 1;
+				var newNode = new Node(child, node, act, newDistance);
+				frontier.update(newNode, newDistance);
+			}
+		}
+	}
+	problem.explored = explored;
+	problem.shortestPath = answer;
+	callSearchAnimation(problem);
+}
 
 
 
