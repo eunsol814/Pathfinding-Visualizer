@@ -127,18 +127,8 @@ function dijkstra(problem) {
 	var answer = null;
 	var explored = [];
 	var frontier = new PriorityQueue();
-	var start = problem.getStartState()
-	for (var i=0; i<problem.rows; i++) {
-		for (var j=0; j<problem.cols; j++) {
-			var index = {r: i, c: j};
-			if (!(_.isEqual(index, start))) {
-				frontier.push(new Node(index, null, null, Infinity), Infinity);
-			} else {
-				console.log(index, start);
-				frontier.push(new Node(start, null, null, 0), 0);
-			}
-		}
-	}
+	var start = new Node(problem.getStartState(), null, null, 0);
+	frontier.push(start, 0);
 	while (!frontier.isEmpty()) {
 		var node = frontier.pop();
 		var state = node.state;
