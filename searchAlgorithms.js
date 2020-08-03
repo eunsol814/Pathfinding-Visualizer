@@ -157,7 +157,7 @@ function dijkstra(problem) {
 	problem.explored = explored;
 	problem.shortestPath = answer;
 	callSearchAnimation(problem);
-}
+};
 
 
 

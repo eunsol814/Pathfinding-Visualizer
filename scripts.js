@@ -38,6 +38,10 @@ $(document).ready(function() {
 		}
 	};
 
+	document.getElementById("random").onclick = function() {
+		randomMaze(maze);
+	};
+
 	//breadthFirstSearch(maze);
 
 	document.getElementById("clearboard").onclick = function() {
