@@ -1,4 +1,5 @@
 function callSearchAnimation(maze) {
+	maze.clearPaths();
 	let state = maze.getStartState();
 	for (let i=1; i<maze.explored.length; i++) {
 		setTimeout(() => {
@@ -17,6 +18,15 @@ function callSearchAnimation(maze) {
 	}, maze.explored.length * 10)
 };
 
+function callMazeAnimation(maze) {
+	maze.clearWalls();
+	for (let i=0; i<maze.maze.length; i++) {
+		setTimeout(() => {
+			document.getElementById(JSON.stringify(maze.maze[i])).className = "wall";
+		}, i * 10);
+	}
+}
+
 function visualize(maze) {
 	let algorithm =  maze.algorithm;
 	let heuristic = maze.heuristic;
@@ -24,7 +34,6 @@ function visualize(maze) {
 
 function drag(ev) {
 	ev.dataTransfer.setData("onMove", ev.target.id);
-	console.log(ev.target);
 };
 
 function allowDrop(ev) {

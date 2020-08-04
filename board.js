@@ -1,14 +1,14 @@
 class Board {
 	constructor() {
-		this.maze = document.getElementById("maze");
+		this.maze = [];
 		//this.width = 500;
 		//this.height = 300;
 		this.rows = 25;
-		this.cols = 40;
+		this.cols = 45;
 		this.data = null;
 		this.directions = ["Up", "Down", "Right", "Left"];
-		this.startState = {r: 10, c: 10};
-		this.goalState = {r: 10, c: 30};
+		this.startState = {r: 12, c: 10};
+		this.goalState = {r: 12, c: 35};
 		this.algorithm = "BFS";
 		this.heuristic = null;
 		this.search = null;
@@ -54,6 +54,7 @@ class Board {
 				}
 			}
 		}
+		this.maze = [];
 	};
 
 	clearWalls() {

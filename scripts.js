@@ -42,6 +42,10 @@ $(document).ready(function() {
 		randomMaze(maze);
 	};
 
+	document.getElementById("division").onclick = function() {
+		recursiveDivision(maze);
+	};
+
 	//breadthFirstSearch(maze);
 
 	document.getElementById("clearboard").onclick = function() {
