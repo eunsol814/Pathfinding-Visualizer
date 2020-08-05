@@ -51,12 +51,12 @@ function buildEdge(board) {
 
 function buildWalls(board, minrow, mincol, maxrow, maxcol) {
 	if ((maxrow - minrow >= maxcol - mincol) && (maxrow - minrow > 1)) {
-		var row = Math.floor(Math.random() * (maxrow - minrow + 1) + minrow);
+		var row = Math.floor(Math.random() * (maxrow - minrow)) + minrow;
 		buildHWall(board, row, mincol, maxcol);
 		buildWalls(board, minrow, mincol, row, maxcol);
 		buildWalls(board, row, mincol, maxrow, maxcol);
 	} else if ((maxrow - minrow < maxcol - mincol) && (maxcol - mincol > 1)){
-		var col = Math.floor(Math.random() * (maxcol - mincol + 1) + mincol);
+		var col = Math.floor(Math.random() * (maxcol - mincol)) + mincol;
 		buildVWall(board, col, minrow, maxrow);
 		buildWalls(board, minrow, mincol, maxrow, col);
 		buildWalls(board, minrow, col, maxrow, maxcol);
@@ -65,24 +65,26 @@ function buildWalls(board, minrow, mincol, maxrow, maxcol) {
 };
 
 function buildHWall(board, row, mincol, maxcol) {
-	var space = Math.floor(Math.random() * (maxcol - mincol + 1) + mincol);
-	for (let i=mincol; i<maxcol; i++) {
+	var space = Math.floor(Math.random() * (maxcol - mincol)) + mincol;
+	console.log(row, space);
+	for (let i=mincol*2+2; i<maxcol*2+2; i++) {
 		if (i != space) {
-			row = 2 + row * 2;
-			col = 2 + i * 2
-			var index = {r: row, c: col};
+			var newrow = 2 + row * 2;
+			var index = {r: newrow, c: i};
+			console.log(index);
 			board.maze.push(index);
 		}
 	}
 };
 
 function buildVWall(board, col, minrow, maxrow) {
-	var space = Math.floor(Math.random() * (maxrow - minrow + 1) + minrow);
-	for (let i=minrow; i<maxrow; i++) {
-		if (i != space) {
-			row = 2 + i * 2;
-			col = 2 + col * 2
-			var index = {r: row, c: col};
+	var space = Math.floor(Math.random() * (maxrow - minrow)) + minrow;
+	console.log(col, space);
+	for (let i=minrow*2+2; i<maxrow*2+2; i++) {
+		if (i != space*2+2) {
+			var newcol = 2 + col * 2;
+			var index = {r: i, c:newcol};
+			console.log(index);
 			board.maze.push(index);
 		}
 	}
