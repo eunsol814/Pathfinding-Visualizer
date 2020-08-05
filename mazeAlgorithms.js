@@ -13,10 +13,8 @@ function randomMaze(board) {
 };
 
 function recursiveDivision(board) {
-	var rows = Math.floor((board.rows - 3) / 2);
-	var cols = Math.floor((board.cols - 3) / 2);
 	buildEdge(board);
-	buildWalls(board, 0, 0, rows, cols);
+	buildWalls(board, 0, 0, board.rows, board.cols);
 	callMazeAnimation(board);
 };
 
@@ -50,13 +48,13 @@ function buildEdge(board) {
 };
 
 function buildWalls(board, minrow, mincol, maxrow, maxcol) {
-	if ((maxrow - minrow >= maxcol - mincol) && (maxrow - minrow > 1)) {
-		var row = Math.floor(Math.random() * (maxrow - minrow)) + minrow;
+	if ((maxrow - minrow >= maxcol - mincol) && (maxrow - minrow > 4)) {
+		var row = Math.floor(Math.random() * (maxrow - minrow) / 2) * 2 + minrow;
 		buildHWall(board, row, mincol, maxcol);
 		buildWalls(board, minrow, mincol, row, maxcol);
 		buildWalls(board, row, mincol, maxrow, maxcol);
-	} else if ((maxrow - minrow < maxcol - mincol) && (maxcol - mincol > 1)){
-		var col = Math.floor(Math.random() * (maxcol - mincol)) + mincol;
+	} else if ((maxrow - minrow < maxcol - mincol) && (maxcol - mincol > 4)){
+		var col = Math.floor(Math.random() * (maxcol - mincol) / 2) * 2 + mincol;
 		buildVWall(board, col, minrow, maxrow);
 		buildWalls(board, minrow, mincol, maxrow, col);
 		buildWalls(board, minrow, col, maxrow, maxcol);
@@ -67,10 +65,9 @@ function buildWalls(board, minrow, mincol, maxrow, maxcol) {
 function buildHWall(board, row, mincol, maxcol) {
 	var space = Math.floor(Math.random() * (maxcol - mincol)) + mincol;
 	console.log(row, space);
-	for (let i=mincol*2+2; i<maxcol*2+2; i++) {
+	for (let i=mincol; i<maxcol; i++) {
 		if (i != space) {
-			var newrow = 2 + row * 2;
-			var index = {r: newrow, c: i};
+			var index = {r: row, c: i};
 			console.log(index);
 			board.maze.push(index);
 		}
@@ -80,10 +77,9 @@ function buildHWall(board, row, mincol, maxcol) {
 function buildVWall(board, col, minrow, maxrow) {
 	var space = Math.floor(Math.random() * (maxrow - minrow)) + minrow;
 	console.log(col, space);
-	for (let i=minrow*2+2; i<maxrow*2+2; i++) {
-		if (i != space*2+2) {
-			var newcol = 2 + col * 2;
-			var index = {r: i, c:newcol};
+	for (let i=minrow; i<maxrow; i++) {
+		if (i != space) {
+			var index = {r: i, c: col};
 			console.log(index);
 			board.maze.push(index);
 		}
