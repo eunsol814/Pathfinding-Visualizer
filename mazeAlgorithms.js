@@ -13,10 +13,10 @@ function randomMaze(board) {
 };
 
 function recursiveDivision(board) {
-	var rows = Math.floor((board.rows - 1) / 2);
-	var cols = Math.floor((board.cols - 1) / 2);
+	var rows = Math.floor((board.rows - 3) / 2);
+	var cols = Math.floor((board.cols - 3) / 2);
 	buildEdge(board);
-	buildWalls(board, rows, cols);
+	buildWalls(board, 0, 0, rows, cols);
 	callMazeAnimation(board);
 };
 
@@ -49,6 +49,47 @@ function buildEdge(board) {
 	board.maze = result;
 };
 
-function buildWalls(board, rows, cols) {
-
+function buildWalls(board, minrow, mincol, maxrow, maxcol) {
+	if ((maxrow - minrow >= maxcol - mincol) && (maxrow - minrow > 1)) {
+		var row = Math.floor(Math.random() * (maxrow - minrow + 1) + minrow);
+		buildHWall(board, row, mincol, maxcol);
+		buildWalls(board, minrow, mincol, row, maxcol);
+		buildWalls(board, row, mincol, maxrow, maxcol);
+	} else if ((maxrow - minrow < maxcol - mincol) && (maxcol - mincol > 1)){
+		var col = Math.floor(Math.random() * (maxcol - mincol + 1) + mincol);
+		buildVWall(board, col, minrow, maxrow);
+		buildWalls(board, minrow, mincol, maxrow, col);
+		buildWalls(board, minrow, col, maxrow, maxcol);
+	}
+	return;
 };
+
+function buildHWall(board, row, mincol, maxcol) {
+	var space = Math.floor(Math.random() * (maxcol - mincol + 1) + mincol);
+	for (let i=mincol; i<maxcol; i++) {
+		if (i != space) {
+			row = 2 + row * 2;
+			col = 2 + i * 2
+			var index = {r: row, c: col};
+			board.maze.push(index);
+		}
+	}
+};
+
+function buildVWall(board, col, minrow, maxrow) {
+	var space = Math.floor(Math.random() * (maxrow - minrow + 1) + minrow);
+	for (let i=minrow; i<maxrow; i++) {
+		if (i != space) {
+			row = 2 + i * 2;
+			col = 2 + col * 2
+			var index = {r: row, c: col};
+			board.maze.push(index);
+		}
+	}
+};
+
+
+
+
+
+
