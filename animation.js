@@ -27,6 +27,18 @@ function callMazeAnimation(maze) {
 	}
 }
 
+function callUndoMazeAnimation(maze, clearedWalls) {
+	maze.clearWalls();
+	for (let i=0; i<maze.maze.length; i++) {
+		document.getElementById(JSON.stringify(maze.maze[i])).className = "wall";
+	}
+	for (let j=0; j<clearedWalls.length; j++) {
+		setTimeout(() => {
+			document.getElementById(JSON.stringify(clearedWalls[j])).className = "blank";
+		}, j * 10);
+	}
+}
+
 function visualize(maze) {
 	let algorithm =  maze.algorithm;
 	let heuristic = maze.heuristic;

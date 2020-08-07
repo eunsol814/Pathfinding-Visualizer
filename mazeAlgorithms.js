@@ -90,6 +90,61 @@ function buildVWall(board, col, minrow, maxrow) {
 	}
 };
 
+function recursiveBacktrack(board) {
+	var rows = (board.rows - 1) / 2;
+	var cols = (board.cols - 1) / 2;
+	var visited = [];
+	var index = {r: 1, c: 1}
+	var clearedWalls = backtrackMaze(rows, cols, visited, index);
+	callUndoMazeAnimation(board, clearedWalls);
+};
+
+function backtrackMaze(rows, cols, visited, currCell) {
+	var neighbors = getRecursiveBacktrackNeighbors(rows, cols, currCell);
+	if (neighbors == []) {
+		return [];
+	}
+	for neighbor of neighbors {
+		if !(neighbor in visited) {
+			visited.append(neighbor);
+			var result = backtrackMaze(rows, cols, visited, neighbor);
+			result.unshift(getRecursiveBacktrackWall(currCell, neighbor));
+		}
+	}
+
+};
+
+function getRecursiveBacktrackNeighbors(rows, cols, currCell) {
+	var result = [];
+	var row = currCell.r;
+	var col = currCell.c;
+	var rows = rows * 2 + 1;
+	var cols = cols * 2 + 1;
+	if ((row - 2 >= 0) && (col - 2 >= 0)) {
+		var index = {r: row-2, c: col-2};
+		result.push(index);
+	} else if ((row - 2 >=0) && (col + 2 < cols)) {
+		var index = {r: row-2, c: col+2};
+		result.push(index);
+	} else if ((row + 2 < rows) && (col - 2 >= 0)) {
+		var index = {r: row+2, c: col-2};
+		result.push(index);
+	} else if ((row + 2 < rows) && (col + 2 < cols)) {
+		var index = {r: row+2, c: col+2};
+		result.push(index);
+	}
+	return result;
+};
+
+function getRecursiveBacktrackWall(currCell, neighbor) {
+	var row = (currCell.r + neighbor.r) / 2;
+	var col = (currCell.c + neighbor.c) / 2;
+	var index = {r: row, c: col};
+	return index;
+}
+
+
+
 
 
 
