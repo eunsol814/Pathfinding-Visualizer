@@ -45,6 +45,9 @@ $(document).ready(function() {
 	document.getElementById("division").onclick = function() {
 		recursiveDivision(maze);
 	};
+	document.getElementById("backtrack").onclick = function() {
+		recursiveBacktrack(maze);
+	}
 
 	//breadthFirstSearch(maze);
 

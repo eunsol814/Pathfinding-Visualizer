@@ -91,27 +91,54 @@ function buildVWall(board, col, minrow, maxrow) {
 };
 
 function recursiveBacktrack(board) {
+	var player = board.getStartState();
 	var rows = (board.rows - 1) / 2;
 	var cols = (board.cols - 1) / 2;
 	var visited = [];
 	var index = {r: 1, c: 1}
+	for (let i=0; i<board.rows; i++) {
+		if (i % 2 == 0) {
+			for (let j=0; j<board.cols; j++) {
+				var index = {r: i, c: j};
+				if (!_.isEqual(index, player) && !board.goalTest(index)) {
+					board.maze.push(index);
+				}
+			}
+		} else {
+			for (let j=0; j<board.cols; j+=2) {
+				var index = {r: i, c: j};
+				if (!_.isEqual(index, player) && !board.goalTest(index)) {
+					board.maze.push(index);
+				}
+			}
+		}
+	}
 	var clearedWalls = backtrackMaze(rows, cols, visited, index);
+	clearedWalls = clearedWalls.filter(function(cell) {
+		return (!_.isEqual(cell, player) && !board.goalTest(cell));
+	})
+	//console.log(clearedWalls);
 	callUndoMazeAnimation(board, clearedWalls);
 };
 
 function backtrackMaze(rows, cols, visited, currCell) {
+	//console.log(currCell, visited);
 	var neighbors = getRecursiveBacktrackNeighbors(rows, cols, currCell);
-	if (neighbors == []) {
+	//console.log(neighbors);
+	visited.push(currCell);
+	neighbors.forEach(function(neighbor) {
+		if (!visited.some(cell => _.isEqual(cell, neighbor))) {
+			var result = backtrackMaze(rows, cols, visited, neighbor);
+			var clearWall = getRecursiveBacktrackWall(currCell, neighbor);
+			//console.log(clearWall);
+			result.unshift(clearWall);
+			//console.log(result);
+			return result;
+		}
+	})
+	if (neighbors.every(neighbor => visited.some(cell => _.isEqual(cell, neighbor)))) {
 		return [];
 	}
-	for neighbor of neighbors {
-		if !(neighbor in visited) {
-			visited.append(neighbor);
-			var result = backtrackMaze(rows, cols, visited, neighbor);
-			result.unshift(getRecursiveBacktrackWall(currCell, neighbor));
-		}
-	}
-
 };
 
 function getRecursiveBacktrackNeighbors(rows, cols, currCell) {
@@ -120,20 +147,28 @@ function getRecursiveBacktrackNeighbors(rows, cols, currCell) {
 	var col = currCell.c;
 	var rows = rows * 2 + 1;
 	var cols = cols * 2 + 1;
-	if ((row - 2 >= 0) && (col - 2 >= 0)) {
-		var index = {r: row-2, c: col-2};
-		result.push(index);
-	} else if ((row - 2 >=0) && (col + 2 < cols)) {
-		var index = {r: row-2, c: col+2};
-		result.push(index);
-	} else if ((row + 2 < rows) && (col - 2 >= 0)) {
-		var index = {r: row+2, c: col-2};
-		result.push(index);
-	} else if ((row + 2 < rows) && (col + 2 < cols)) {
-		var index = {r: row+2, c: col+2};
+	if (col - 2 >= 0) {
+		var index = {r: row, c: col-2};
 		result.push(index);
 	}
+	if (col + 2 < cols) {
+		var index = {r: row, c: col+2};
+		result.push(index);
+	}
+	if (row - 2 >= 0) {
+		var index = {r: row-2, c: col};
+		result.push(index);
+	}
+	if (row + 2 < rows) {
+		var index = {r: row+2, c: col};
+		result.push(index);
+	}
+	shuffle(result);
 	return result;
+};
+
+function shuffle(array) {
+	array.sort(() => Math.random() - 0.5);
 };
 
 function getRecursiveBacktrackWall(currCell, neighbor) {
