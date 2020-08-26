@@ -99,6 +99,7 @@ function recursiveBacktrack(board) {
 	var rows = (board.rows - 1) / 2;
 	var cols = (board.cols - 1) / 2;
 	var visited = [];
+	var clearedWalls = [];
 	var index = {r: 1, c: 1}
 	for (let i=0; i<board.rows; i++) {
 		if (i % 2 == 0) {
@@ -117,31 +118,26 @@ function recursiveBacktrack(board) {
 			}
 		}
 	}
-	var clearedWalls = backtrackMaze(rows, cols, visited, index);
+	backtrackMaze(rows, cols, visited, index, clearedWalls);
 	clearedWalls = clearedWalls.filter(function(cell) {
 		return (!_.isEqual(cell, player) && !board.goalTest(cell));
 	})
-	//console.log(clearedWalls);
 	callUndoMazeAnimation(board, clearedWalls);
 };
 
-function backtrackMaze(rows, cols, visited, currCell) {
-	//console.log(currCell, visited);
+function backtrackMaze(rows, cols, visited, currCell, result) {
 	var neighbors = getRecursiveBacktrackNeighbors(rows, cols, currCell);
-	//console.log(neighbors);
 	visited.push(currCell);
 	neighbors.forEach(function(neighbor) {
 		if (!visited.some(cell => _.isEqual(cell, neighbor))) {
-			var result = backtrackMaze(rows, cols, visited, neighbor);
+			backtrackMaze(rows, cols, visited, neighbor, result);
 			var clearWall = getRecursiveBacktrackWall(currCell, neighbor);
-			//console.log(clearWall);
 			result.unshift(clearWall);
-			//console.log(result);
-			return result;
+			return ;
 		}
 	})
 	if (neighbors.every(neighbor => visited.some(cell => _.isEqual(cell, neighbor)))) {
-		return [];
+		return ;
 	}
 };
 

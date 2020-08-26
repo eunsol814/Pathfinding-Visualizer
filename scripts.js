@@ -61,6 +61,9 @@ $(document).ready(function() {
 	document.getElementById("clearpath").onclick = function() {
 		maze.clearPaths();
 	};
+	document.getElementById("help").onclick = function() {
+		openHelp();
+	};
 
 });
 
