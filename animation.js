@@ -1,4 +1,5 @@
 function callSearchAnimation(maze) {
+	// Visualize search algorithm
 	maze.clearPaths();
 	let state = maze.getStartState();
 	for (let i=1; i<maze.explored.length; i++) {
@@ -19,6 +20,7 @@ function callSearchAnimation(maze) {
 };
 
 function callMazeAnimation(maze) {
+	// Visualize maze generation algorithm
 	maze.clearWalls();
 	for (let i=0; i<maze.maze.length; i++) {
 		setTimeout(() => {
@@ -28,6 +30,7 @@ function callMazeAnimation(maze) {
 }
 
 function callUndoMazeAnimation(maze, clearedWalls) {
+	// Visualize recursive backtracking maze generation algorithm
 	maze.clearWalls();
 	for (let i=0; i<maze.maze.length; i++) {
 		document.getElementById(JSON.stringify(maze.maze[i])).className = "wall";
@@ -45,14 +48,17 @@ function visualize(maze) {
 };
 
 function drag(ev) {
+	// Drag player and goal nodes
 	ev.dataTransfer.setData("onMove", ev.target.id);
 };
 
 function allowDrop(ev) {
+	// Allow drop of player and goal nodes
 	ev.preventDefault();
 };
 
 function drop(ev) {
+	// Drop player and goal nodes
 	ev.preventDefault();
 	var data = ev.dataTransfer.getData("onMove");
 	if (document.getElementById(data).className == "player") {

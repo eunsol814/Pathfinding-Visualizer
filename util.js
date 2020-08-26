@@ -1,3 +1,8 @@
+/*
+* This file contains implementation of Objects and Data Structures
+*/
+
+
 class Node {
 	/* 
 		Search node object

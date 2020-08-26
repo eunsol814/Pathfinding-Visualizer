@@ -1,3 +1,8 @@
+/*
+* This file contains heuristics that are used for A* Search
+*/
+
+
 function nullHeuristic(state, problem=null) {
 	return 0;
 }

@@ -1,8 +1,8 @@
 $(document).ready(function() {
 	var maze = new Board();
 	maze.createGrid();
-	//console.log([maze.getStartState()]);
 	
+
 	document.getElementById("BFS").onclick = function() {
 		maze.algorithm = "BFS";
 	};
@@ -16,6 +16,7 @@ $(document).ready(function() {
 		maze.algorithm = "Dijkstra";
 	};
 
+
 	document.getElementById("null").onclick = function() {
 		maze.heuristic = function(a, b) {return nullHeuristic(a, b)};
 	};
@@ -25,6 +26,7 @@ $(document).ready(function() {
 	document.getElementById("euclideanD").onclick = function() {
 		maze.heuristic = function(a, b) {return euclideanDistance(a, b)};
 	};
+
 
 	document.getElementById("visualize").onclick = function() {
 		if (maze.algorithm == "BFS") {
@@ -38,10 +40,10 @@ $(document).ready(function() {
 		}
 	};
 
+
 	document.getElementById("random").onclick = function() {
 		randomMaze(maze);
 	};
-
 	document.getElementById("division").onclick = function() {
 		recursiveDivision(maze);
 	};
@@ -49,16 +51,13 @@ $(document).ready(function() {
 		recursiveBacktrack(maze);
 	}
 
-	//breadthFirstSearch(maze);
 
 	document.getElementById("clearboard").onclick = function() {
 		maze.clearAll();
 	};
-
 	document.getElementById("clearwall").onclick = function() {
 		maze.clearWalls();
 	};
-
 	document.getElementById("clearpath").onclick = function() {
 		maze.clearPaths();
 	};

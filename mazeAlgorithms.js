@@ -19,6 +19,7 @@ function recursiveDivision(board) {
 };
 
 function buildEdge(board) {
+	// Builds outermost edge of maze
 	var result = [];
 	var player = board.getStartState();
 	var goal = board.goalState;
@@ -48,6 +49,7 @@ function buildEdge(board) {
 };
 
 function buildWalls(board, minrow, mincol, maxrow, maxcol) {
+	// Recursively build walls of recursive division maze
 	if ((maxrow - minrow >= maxcol - mincol) && (maxrow - minrow > 3)) {
 		var row = Math.floor(Math.random() * (maxrow - minrow) / 2) * 2 + minrow;
 		buildHWall(board, row, mincol, maxcol);
@@ -63,6 +65,7 @@ function buildWalls(board, minrow, mincol, maxrow, maxcol) {
 };
 
 function buildHWall(board, row, mincol, maxcol) {
+	// Build horizontal wall of recursive division maze
 	var space = Math.floor(Math.random() * (maxcol - mincol - 2) / 2) * 2 + mincol + 1;
 	console.log(row, space);
 	for (let i=mincol+1; i<maxcol; i++) {
@@ -77,6 +80,7 @@ function buildHWall(board, row, mincol, maxcol) {
 };
 
 function buildVWall(board, col, minrow, maxrow) {
+	// Build vertical wall of recursive division maze
 	var space = Math.floor(Math.random() * (maxrow - minrow - 2) / 2) * 2 + minrow + 1;
 	console.log(col, space);
 	for (let i=minrow+1; i<maxrow; i++) {

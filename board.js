@@ -78,6 +78,7 @@ class Board {
 	};
 
 	checkExplored(state) {
+		// Check if 'state' is already explored
 		if (state != this.startState) {
 			let explored = document.getElementById(JSON.stringify(state));
 			explored.className = 'explored';
@@ -85,6 +86,7 @@ class Board {
 	};
 
 	isWall(state) {
+		// Check if 'state' is wall
 		if (this.data == null) {
 			return false;
 		}else {
